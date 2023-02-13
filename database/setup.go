@@ -13,7 +13,7 @@ import (
 
 func ConnectDB() *mongo.Client {
 
-	clientOptions := options.Client().ApplyURI("mongodb+srv://funmi-tech:funmi4194@cluster0.v5gihly.mongodb.net/?retryWrites=true&w=majority")
+	clientOptions := options.Client().ApplyURI()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
