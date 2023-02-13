@@ -2,7 +2,7 @@
 Word Count Project 
 
 
-It has four fetaures 
+It has four features 
 
 1)Counts the numbers of word in a document
 
