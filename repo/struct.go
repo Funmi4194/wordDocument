@@ -1,4 +1,4 @@
-package models
+package repo
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
@@ -13,3 +13,5 @@ type WordCount struct {
 	Paragraphs       int                `json:"paragraphs" bson:"Paragraphs"`
 	Lines            int                `json:"lines" bson:"Lines"`
 }
+
+type WordCounts []WordCount

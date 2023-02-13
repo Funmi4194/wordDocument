@@ -1,107 +1,83 @@
 package controllers
 
 import (
-	"context"
 	"encoding/json"
-	"log"
 	"net/http"
 	"strings"
 
-	"github.com/Funmi4194/myMod/configs"
-	"github.com/Funmi4194/myMod/models"
+	"github.com/Funmi4194/myMod/logic"
+	"github.com/Funmi4194/myMod/repo"
+	response "github.com/Funmi4194/myMod/responses"
 	"github.com/gorilla/mux"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"gopkg.in/mgo.v2/bson"
 )
 
-var usercollection *mongo.Collection = configs.GetConnection("WordDocuments")
-var document models.WordCount
-
+//CreateDocument creates a new document history and returns an handlerFunc
 func CreateDocument() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "application/json")
+		var document repo.WordCount
+		//Decode json objects into the body
 		if err := json.NewDecoder(r.Body).Decode(&document); err != nil {
-			log.Fatal(err)
+			response.SendJSONResponse(w, false, http.StatusBadRequest, err.Error(), nil)
+			return
 		}
 
-		content := strings.Join(strings.Fields(document.Content), " ")
-		totalCount := len(strings.Split(content, " "))
-
-		totalCharacters := len(strings.Split(document.Content, ""))
-
-		//(total character without space)
-		content2 := strings.Replace(document.Content, " ", "", -1)
-		charWithoutSpace := len(strings.Split(content2, ""))
-
-		//numbers of sentences
-		sentences := len(strings.Split(document.Content, "."))
-
-		// numbers of paragraphs
-		paragraphs := len(strings.Split(document.Content, "\n\n"))
-
-		//numbers of line
-
-		lines := strings.SplitAfterN(document.Content, "\n", -1)
-		line := len(lines)
-
-		documents := models.WordCount{
-			DocumentName:     strings.ToLower(document.DocumentName),
-			Content:          document.Content,
-			Words:            totalCount,
-			Characters:       totalCharacters,
-			CharWithoutSpace: charWithoutSpace,
-			Sentence:         sentences,
-			Paragraphs:       paragraphs,
-			Lines:            line,
-		}
-
-		result, err := usercollection.InsertOne(context.Background(), documents)
-		document.ID = result.InsertedID.(primitive.ObjectID)
+		content := document.Content
+		wordName := document.DocumentName
+		// create word takes wordname and content from the document struct instance
+		documents, err := logic.CreateWord(wordName, content)
 		if err != nil {
-			log.Fatal(err)
+
+			response.SendJSONResponse(w, false, http.StatusBadRequest, err.Error(), nil)
+			return
+
 		}
-		json.NewEncoder(w).Encode(documents)
+
+		response.SendJSONResponse(w, true, http.StatusOK, "Created sucessfully", response.M{"word": documents})
 	}
 }
 
 func GetDocument() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		var document models.WordCount
+		// set variable params
 		params := mux.Vars(r)
 		doc := strings.ToLower(params["doc"])
 
-		filter := bson.M{"DocumentName": doc}
-		err := usercollection.FindOne(context.Background(), filter).Decode(&document)
+		documents, err := logic.GetDocument(doc)
 		if err != nil {
-			log.Fatal(err)
+
+			response.SendJSONResponse(w, false, http.StatusBadRequest, err.Error(), nil)
+			return
+
 		}
-		json.NewEncoder(w).Encode(document)
+
+		response.SendJSONResponse(w, true, http.StatusOK, "Document details retrieved", response.M{"word": documents})
+
 	}
 }
 
-func GetDocuments() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
+//var usercollection *mongo.Collection = database.GetConnection("WordDocuments")
 
-		result, err := usercollection.Find(context.Background(), bson.M{})
-		if err != nil {
-			log.Fatal(err)
-		}
-		var documents []models.WordCount
-		defer result.Close(context.Background())
+// func GetDocuments() http.HandlerFunc {
+// 	return func(w http.ResponseWriter, r *http.Request) {
+// 		w.Header().Set("Content-Type", "application/json")
 
-		for result.Next(context.Background()) {
-			var document models.WordCount
-			err = result.Decode(&document)
-			if err != nil {
-				log.Fatal(err)
-			}
-			documents = append(documents, document)
-		}
-		json.NewEncoder(w).Encode(documents)
+// 		result, err := usercollection.Find(context.Background(), bson.M{})
+// 		if err != nil {
+// 			log.Fatal(err)
+// 		}
+// 		var documents []repo.WordCount
+// 		defer result.Close(context.Background())
 
-	}
+// 		for result.Next(context.Background()) {
+// 			var document repo.WordCount
+// 			err = result.Decode(&document)
+// 			if err != nil {
+// 				log.Fatal(err)
+// 			}
+// 			documents = append(documents, document)
+// 		}
+// 		json.NewEncoder(w).Encode(documents)
 
-}
+// 	}

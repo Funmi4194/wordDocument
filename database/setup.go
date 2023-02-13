@@ -1,4 +1,4 @@
-package configs
+package database
 
 import (
 	"context"
@@ -28,12 +28,4 @@ func ConnectDB() *mongo.Client {
 	}
 	fmt.Println("Connected to MongoDB!")
 	return client
-
-}
-
-var DB *mongo.Client = ConnectDB()
-
-func GetConnection(collectionInstance string) *mongo.Collection {
-	collection := DB.Database("WordCount").Collection(collectionInstance)
-	return collection
 }
