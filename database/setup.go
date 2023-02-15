@@ -14,9 +14,15 @@ import (
 )
 
 func ConnectDB() *mongo.Client {
+<<<<<<< HEAD
 	environ.Environ()
 	clientOptions := options.Client().ApplyURI(config.Env.DocumentDBUri)
 	//fmt.Print(config.Env.DocumentDBUri)
+=======
+
+	clientOptions := options.Client().ApplyURI()
+
+>>>>>>> 273cb406b0a680d09df22beca28ceae819915280
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
