@@ -9,23 +9,28 @@ import (
 	"time"
 
 	"github.com/Funmi4194/myMod/database"
+	"github.com/Funmi4194/myMod/middleware"
 	"github.com/Funmi4194/myMod/routes"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
-func main() {
+func createServer() (s *http.Server) {
 	//setup the mux router
 	h := mux.NewRouter()
+	r := middleware.Recover(h)
 
-	//connect to database
-	database.ConnectDB()
+	logger := handlers.CombinedLoggingHandler(os.Stdout, r)
 
 	//call the endpoints into the handler
 	routes.UserRoute(h)
+	// environ.Environ()
+	//connect to database
+	database.ConnectDB()
 
-	s := &http.Server{
+	s = &http.Server{
 		Addr:    ":80",
-		Handler: h,
+		Handler: logger,
 	}
 
 	//create a new goroutines to start the server
@@ -36,6 +41,11 @@ func main() {
 			log.Fatalf("error listening on port: %s\n", err)
 		}
 	}()
+	return s
+}
+
+func main() {
+	s := createServer()
 
 	osSignal := make(chan os.Signal, 1)
 	signal.Notify(osSignal, os.Interrupt)

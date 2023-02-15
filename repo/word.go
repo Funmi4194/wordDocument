@@ -29,23 +29,32 @@ func (w *WordCount) FindDocument() error {
 	//create a find filter
 	filter := bson.D{primitive.E{Key: "DocumentName", Value: w.DocumentName}}
 	if err := UserCollection.FindOne(context.Background(), filter).Decode(&w); err != nil {
-		//if err == mongo.ErrNoDocuments {
+
 		return err
-		//}
+
 	}
 	return nil
 }
 
-//Find all documents
-func (w *WordCount) FindDocuments() error {
-	result, err := UserCollection.Find(context.Background(), bson.D{})
-	if err != nil {
-		return err
-	} else {
-		if err := result.All(context.Background(), w); err != nil {
-			return err
-		}
-	}
+// //Find all documents
+// func (w *WordCount) Documents() (WordCounts, error) {
+// 	result, err := UserCollection.Find(context.Background(), bson.D{})
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	var documents WordCounts
+// 	defer result.Close(context.Background())
+// 	for result.Next(context.Background()) {
+// 		var document WordCount
+// 		err = result.Decode(&document)
+// 		if err != nil {
+// 			return nil, err
+// 		}
+// 		documents = append(documents, document)
+// 	}
+// 	if err := result.Err(); err != nil {
+// 		return nil, err
+// 	}
 
-	return nil
-}
+// 	return documents, nil
+// }

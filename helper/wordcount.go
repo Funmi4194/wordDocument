@@ -47,3 +47,11 @@ func Line(content string) int {
 
 	return count
 }
+
+// func Pages(content string)int{
+// 	count := len(strings.Split(content, ""))
+// 	page := 1800
+// 	if count >= page{
+// 		pa
+// 	}
+// }

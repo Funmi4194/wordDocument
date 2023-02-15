@@ -48,7 +48,7 @@ func GetDocument() http.HandlerFunc {
 		if err != nil {
 
 			response.SendJSONResponse(w, false, http.StatusBadRequest, err.Error(), nil)
-			return
+			// return
 
 		}
 

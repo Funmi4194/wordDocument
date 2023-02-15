@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+//jsonReponse for every http request
 func SendJSONResponse(w http.ResponseWriter, status bool, statusCode int, message string, data map[string]interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 

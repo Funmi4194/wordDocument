@@ -37,16 +37,19 @@ func GetDocument(wordName string) (*repo.WordCount, error) {
 	document := repo.WordCount{
 		DocumentName: wordName,
 	}
+
 	if err := document.FindDocument(); err != nil {
 		return nil, fmt.Errorf("document not found")
 	}
 	return &document, nil
 }
 
-// func GetDocuments() (*repo.WordCounts, error) {
-// 	var documents repo.WordCounts
-// 	if err := documents.FindDocuments(); err != nil {
-// 		return nil, err
+// func GetDocuments() {
+// 	w := repo.WordCounts{}
+// 	docs, err := w.
+// 	if err != nil {
+// 		// handle error
+// 		return
 // 	}
 
 // }
