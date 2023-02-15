@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -14,15 +15,8 @@ import (
 )
 
 func ConnectDB() *mongo.Client {
-<<<<<<< HEAD
 	environ.Environ()
 	clientOptions := options.Client().ApplyURI(config.Env.DocumentDBUri)
-	//fmt.Print(config.Env.DocumentDBUri)
-=======
-
-	clientOptions := options.Client().ApplyURI()
-
->>>>>>> 273cb406b0a680d09df22beca28ceae819915280
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -34,6 +28,6 @@ func ConnectDB() *mongo.Client {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// fmt.Println("Connected to MongoDB!")
+	fmt.Println("Connected to MongoDB!")
 	return client
 }
