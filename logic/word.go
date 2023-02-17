@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/Funmi4194/myMod/helper"
-	"github.com/Funmi4194/myMod/repo"
+	repo "github.com/Funmi4194/myMod/repository"
 )
 
 //CreateWord  creates new wordCount document
@@ -21,6 +21,7 @@ func CreateWord(wordName string, content string) (*repo.WordCount, error) {
 		Paragraphs:       helper.Paragraphs(content),
 		Lines:            helper.Line(content),
 	}
+
 	// check if document exists
 	if err := documents.FindDocument(); err == nil {
 		return nil, fmt.Errorf("document already exists")
@@ -32,10 +33,12 @@ func CreateWord(wordName string, content string) (*repo.WordCount, error) {
 	}
 	return &documents, nil
 }
+
+//Get a document by its name
 func GetDocument(wordName string) (*repo.WordCount, error) {
 
 	document := repo.WordCount{
-		DocumentName: wordName,
+		DocumentName: strings.ToLower(wordName),
 	}
 
 	if err := document.FindDocument(); err != nil {

@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/Funmi4194/myMod/enviroment"
+	environ "github.com/Funmi4194/myMod/environment"
 )
 
-func VerifyEnvironment(env enviroment.Env) error {
+//verify each environmental variables
+func VerifyEnvironment(env environ.Env) error {
 	//get the type of the argument
 	t := reflect.TypeOf(env)
 	if t == nil {
@@ -33,7 +34,8 @@ func VerifyEnvironment(env enviroment.Env) error {
 	return nil
 }
 
-func AppendEnvironment(env *enviroment.Env) {
+//Append Environment variables
+func AppendEnvironment(env *environ.Env) {
 	//get the type of argument
 	t := reflect.TypeOf(*env)
 	if t == nil {

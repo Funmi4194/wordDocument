@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/Funmi4194/myMod/logic"
-	"github.com/Funmi4194/myMod/repo"
+	repo "github.com/Funmi4194/myMod/repository"
 	response "github.com/Funmi4194/myMod/responses"
 	"github.com/gorilla/mux"
 )
@@ -42,13 +42,15 @@ func GetDocument() http.HandlerFunc {
 		w.Header().Set("Content-Type", "application/json")
 		// set variable params
 		params := mux.Vars(r)
+		//convert params to lowercase
 		doc := strings.ToLower(params["doc"])
 
+		//set doc to GetDocument to search for document
 		documents, err := logic.GetDocument(doc)
 		if err != nil {
 
 			response.SendJSONResponse(w, false, http.StatusBadRequest, err.Error(), nil)
-			// return
+			return
 
 		}
 

@@ -3,31 +3,25 @@ package database
 import (
 	"context"
 	"fmt"
-	"log"
 	"time"
 
-	//"github.com/Funmi4194/myMod/config"
-	"github.com/Funmi4194/myMod/config"
-	"github.com/Funmi4194/myMod/environ"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-func ConnectDB() *mongo.Client {
-	environ.Environ()
-	clientOptions := options.Client().ApplyURI(config.Env.DocumentDBUri)
+func NewMongoDBClient(uri string) (client *mongo.Client, err error) {
+	clientOption := options.Client().ApplyURI(uri)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-
-	client, err := mongo.Connect(ctx, clientOptions)
+	client, err = mongo.Connect(ctx, clientOption)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	err = client.Ping(ctx, readpref.Primary())
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	fmt.Println("Connected to MongoDB!")
-	return client
+	return client, nil
 }

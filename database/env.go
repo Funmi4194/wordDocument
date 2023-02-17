@@ -1,10 +1,10 @@
-package environ
+package database
 
 import (
 	"log"
 
 	"github.com/Funmi4194/myMod/config"
-	"github.com/Funmi4194/myMod/enviroment"
+	environ "github.com/Funmi4194/myMod/environment"
 	"github.com/joho/godotenv"
 )
 
@@ -17,7 +17,7 @@ func Environ() {
 		}
 	}
 
-	if err := config.VerifyEnvironment(enviroment.Env{}); err != nil {
+	if err := config.VerifyEnvironment(environ.Env{}); err != nil {
 		log.Fatalf("Error verifying environment variables: %s\n", err)
 	}
 	config.AppendEnvironment(config.Env)

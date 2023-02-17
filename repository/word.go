@@ -6,16 +6,17 @@ import (
 	"github.com/Funmi4194/myMod/database"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var UserCollection *mongo.Collection = database.GetConnection("WordDocuments")
+//var UserCollection mongo.Collection = database.WordCountDB.Collection("WordDocuments")
+
+//var UserCollection *mongo.Collection = database.GetConnection("WordDocuments")
 
 //Create a new document
 func (w *WordCount) Create() error {
 	//insert a new document
 	//w takes all the values in the struct WordCount
-	result, err := UserCollection.InsertOne(context.Background(), w)
+	result, err := database.WordCountDB.Collection("WordDocuments").InsertOne(context.Background(), w)
 	if err != nil {
 		return err
 	}
@@ -28,7 +29,7 @@ func (w *WordCount) Create() error {
 func (w *WordCount) FindDocument() error {
 	//create a find filter
 	filter := bson.D{primitive.E{Key: "DocumentName", Value: w.DocumentName}}
-	if err := UserCollection.FindOne(context.Background(), filter).Decode(&w); err != nil {
+	if err := database.WordCountDB.Collection("WordDocuments").FindOne(context.Background(), filter).Decode(&w); err != nil {
 
 		return err
 
