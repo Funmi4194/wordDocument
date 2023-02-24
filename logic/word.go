@@ -9,17 +9,17 @@ import (
 )
 
 //CreateWord  creates new wordCount document
-func CreateWord(wordName string, content string) (*repo.WordCount, error) {
+func CreateWord(w repo.WordCount) (*repo.WordCount, error) {
 
 	documents := repo.WordCount{
-		DocumentName:     strings.ToLower(wordName),
-		Content:          content,
-		Words:            helper.Content(content),
-		Characters:       helper.TotalCharacters(content),
-		CharWithoutSpace: helper.CharWithoutSpace(content),
-		Sentence:         helper.Sentence(content),
-		Paragraphs:       helper.Paragraphs(content),
-		Lines:            helper.Line(content),
+		DocumentName:     strings.ToLower(w.DocumentName),
+		Content:          w.Content,
+		Words:            helper.Content(w.Content),
+		Characters:       helper.TotalCharacters(w.Content),
+		CharWithoutSpace: helper.CharWithoutSpace(w.Content),
+		Sentence:         helper.Sentence(w.Content),
+		Paragraphs:       helper.Paragraphs(w.Content),
+		Lines:            helper.Line(w.Content),
 	}
 
 	// check if document exists
@@ -47,12 +47,10 @@ func GetDocument(wordName string) (*repo.WordCount, error) {
 	return &document, nil
 }
 
-// func GetDocuments() {
-// 	w := repo.WordCounts{}
-// 	docs, err := w.
-// 	if err != nil {
-// 		// handle error
-// 		return
-// 	}
-
-// }
+func GetDocuments() (*repo.WordCounts, error) {
+	var documents repo.WordCounts
+	if err := documents.Documents(); err != nil {
+		return nil, fmt.Errorf("no document was found")
+	}
+	return &documents, nil
+}

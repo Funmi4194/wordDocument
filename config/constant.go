@@ -1,13 +1,15 @@
 package config
 
-import environ "github.com/Funmi4194/myMod/environment"
+import (
+	"github.com/Funmi4194/myMod/types"
+)
 
 const (
-	envTagName = "env"
+	envTagName     = "env"
+	WordCollection = "WordDocuments"
 )
 
 //Global varables
 var (
-	//instance of Env struct
-	Env = new(environ.Env)
+	Env = new(types.Env)
 )

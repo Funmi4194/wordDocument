@@ -1,4 +1,4 @@
-package environ
+package types
 
 type Env struct {
 	//DocumentDBUri i a monogodb connection string for Document database

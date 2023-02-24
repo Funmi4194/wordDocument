@@ -11,9 +11,9 @@ import (
 
 	"github.com/Funmi4194/myMod/config"
 	"github.com/Funmi4194/myMod/database"
-	environ "github.com/Funmi4194/myMod/environment"
 	"github.com/Funmi4194/myMod/middleware"
 	"github.com/Funmi4194/myMod/routes"
+	"github.com/Funmi4194/myMod/types"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -42,7 +42,7 @@ func createServer() (s *http.Server) {
 	}
 
 	//verify env variables
-	if err := config.VerifyEnvironment(environ.Env{}); err != nil {
+	if err := config.VerifyEnvironment(types.Env{}); err != nil {
 		log.Fatalf("Error verifying environment variables: %s\n", err)
 	}
 

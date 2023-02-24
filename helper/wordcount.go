@@ -1,6 +1,8 @@
 package helper
 
-import "strings"
+import (
+	"strings"
+)
 
 //Counts the numbers of words
 func Content(content string) int {
@@ -38,6 +40,7 @@ func Paragraphs(content string) int {
 	count := len(strings.Split(content, "\n\n"))
 
 	return count
+
 }
 
 //Counts the numbers of lines
