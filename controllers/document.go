@@ -15,6 +15,7 @@ func CreateDocument(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	body := r.Context().Value(types.BodyCtxKey{}).(*repo.WordCount)
 
+	//add the body to the logic function
 	documents, err := logic.CreateWord(*body)
 	if err != nil {
 
@@ -48,43 +49,17 @@ func GetDocument(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetDocuments() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		document, err := logic.GetDocuments()
+func GetDocuments(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 
-		if err != nil {
+	document, err := logic.GetDocuments()
 
-			response.SendJSONResponse(w, false, http.StatusBadRequest, err.Error(), nil)
-			return
+	if err != nil {
 
-		}
+		response.SendJSONResponse(w, false, http.StatusBadRequest, err.Error(), nil)
+		return
 
-		response.SendJSONResponse(w, true, http.StatusOK, "Document details retrieved", response.M{"word": document})
 	}
+
+	response.SendJSONResponse(w, true, http.StatusOK, "Document details retrieved", response.M{"word": document})
 }
-
-// for result.Next(context.Background()) {
-// 	var document WordCount
-// 	err = result.Decode(&document)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	documents = append(documents, document)
-// }
-// if err := result.Err(); err != nil {
-// 	return nil, err
-// }
-// }
-
-// defer display.Close(context.Background())
-// for display.Next(context.Background()) {
-// 	//used bson.D because order matters to me
-// 	var user bson.D
-// 	err = display.Decode(&user)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	fmt.Println(user)
-// }
-
-// }

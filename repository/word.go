@@ -47,22 +47,3 @@ func (w *WordCounts) Documents() error {
 	}
 	return nil
 }
-
-// 		w.Header().Set("Content-Type", "application/json")
-
-// 		result, err := usercollection.Find(context.Background(), bson.M{})
-// 		if err != nil {
-// 			log.Fatal(err)
-// 		}
-// 		var documents []repo.WordCount
-// 		defer result.Close(context.Background())
-
-// 		for result.Next(context.Background()) {
-// 			var document repo.WordCount
-// 			err = result.Decode(&document)
-// 			if err != nil {
-// 				log.Fatal(err)
-// 			}
-// 			documents = append(documents, document)
-// 		}
-// 		json.NewEncoder(w).Encode(documents)

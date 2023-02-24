@@ -15,6 +15,6 @@ func UserRoute(route *mux.Router) {
 	//handler to get document
 	route.Handle("/getDoc/{doc}", middleware.ParamsWithFunc()(controllers.GetDocument)).Methods("GET")
 
-	route.HandleFunc("/getAllDoc", controllers.GetDocuments()).Methods("GET")
+	route.Handle("/getAllDoc", middleware.DocsWithFunc()(controllers.GetDocuments)).Methods("GET")
 
 }

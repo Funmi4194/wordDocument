@@ -27,10 +27,8 @@ func ParamsWithFunc() func(func(http.ResponseWriter, *http.Request)) http.Handle
 func DocsWithFunc() func(func(http.ResponseWriter, *http.Request)) http.Handler {
 	return func(next func(http.ResponseWriter, *http.Request)) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			// set variable params
 
-			// Add the document params to the request context
-			ctx := context.WithValue(r.Context(), types.ParamsCtxKey{}, params)
+			ctx := context.WithValue(r.Context(), types.AuthCtxKey{}, "document")
 
 			next(w, r.WithContext(ctx))
 
