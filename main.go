@@ -37,7 +37,7 @@ func createServer() (s *http.Server) {
 	log.Printf("Loading %s file\n", env)
 	if err := godotenv.Load(env); err != nil {
 		if err := godotenv.Load(); err != nil {
-			log.Printf("Error verifying environment varaiables: %s\n", err)
+			log.Printf("Error loading environment varaiables: %s\n", err)
 		}
 	}
 

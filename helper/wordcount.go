@@ -6,8 +6,9 @@ import (
 
 //Counts the numbers of words
 func Content(content string) int {
-	word := strings.Join(strings.Fields(content), " ")
-	count := len(strings.Split(word, " "))
+	// word := strings.Join(strings.Fields(content), " ")
+	// count := len(strings.Split(word, " "))
+	count := len(strings.Fields(content))
 
 	return count
 }

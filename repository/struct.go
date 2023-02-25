@@ -4,14 +4,14 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type WordCount struct {
 	ID               primitive.ObjectID `json:"id" bson:"ID,omitempty"`
-	DocumentName     string             `json:"documentname" bson:"DocumentName"`
-	Content          string             `json:"content" bson:"Content"`
-	Words            int                `json:"words" bson:"Words"`
-	Characters       int                `json:"characters" bson:"Characters"`
-	CharWithoutSpace int                `json:"charWithoutSpace" bson:"WordsCharWithoutSpace"`
-	Sentence         int                `json:"sentence" bson:"Sentence"`
-	Paragraphs       int                `json:"paragraphs" bson:"Paragraphs"`
-	Lines            int                `json:"lines" bson:"Lines"`
+	DocumentName     string             `json:"document-name" bson:"document-name"`
+	Content          string             `json:"content" bson:"content"`
+	Words            int                `json:"words" bson:"words"`
+	Characters       int                `json:"characters" bson:"characters"`
+	CharWithoutSpace int                `json:"char-without-space" bson:"char-without-space"`
+	Sentence         int                `json:"sentence" bson:"sentence"`
+	Paragraphs       int                `json:"paragraphs" bson:"paragraphs"`
+	Lines            int                `json:"lines" bson:"lines"`
 }
 
 type WordCounts []WordCount

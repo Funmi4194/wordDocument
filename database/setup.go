@@ -2,7 +2,7 @@ package database
 
 import (
 	"context"
-	"fmt"
+	"log"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -22,6 +22,6 @@ func NewMongoDBClient(uri string) (client *mongo.Client, err error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("Connected to MongoDB!")
+	log.Println("Connected to MongoDB!")
 	return client, nil
 }

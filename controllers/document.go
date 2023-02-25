@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"context"
 	"net/http"
 
 	"github.com/Funmi4194/myMod/logic"
@@ -23,12 +22,8 @@ func CreateDocument(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	ctx := context.WithValue(r.Context(), types.AuthCtxKey{}, &documents.DocumentName)
 
-	// load request with context
-	r = r.WithContext(ctx)
-
-	response.SendJSONResponse(w, true, http.StatusOK, "Created sucessfully", response.M{"word": documents}, r)
+	response.SendJSONResponse(w, true, http.StatusOK, "Created sucessfully", response.M{"word": documents})
 }
 
 func GetDocument(w http.ResponseWriter, r *http.Request) {
