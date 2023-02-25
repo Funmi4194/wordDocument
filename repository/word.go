@@ -26,7 +26,7 @@ func (w *WordCount) Create() error {
 //Find documents by documentName
 func (w *WordCount) FindDocument() error {
 	//create a find filter
-	filter := bson.D{primitive.E{Key: "document-name", Value: w.DocumentName}}
+	filter := bson.D{primitive.E{Key: "document_name", Value: w.DocumentName}}
 	if err := database.WordCountDB.Collection(config.WordCollection).FindOne(context.Background(), filter).Decode(&w); err != nil {
 
 		return err
