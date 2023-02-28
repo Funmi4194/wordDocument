@@ -20,6 +20,7 @@ func CreateWord(w repo.WordCount) (*repo.WordCount, error) {
 		Sentence:         helper.Sentence(w.Content),
 		Paragraphs:       helper.Paragraphs(w.Content),
 		Lines:            helper.Line(w.Content),
+		Pages:            helper.Pages(w.Content),
 	}
 
 	// check if document exists

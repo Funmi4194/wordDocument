@@ -52,10 +52,10 @@ func Line(content string) int {
 	return count
 }
 
-// func Pages(content string)int{
-// 	count := len(strings.Split(content, ""))
-// 	page := 1800
-// 	if count >= page{
-// 		pa
-// 	}
-// }
+func Pages(content string) int {
+	lineCount := len(strings.SplitAfterN(content, "\n", -1))
+	linesPerPage := 4
+	pagecount := (lineCount + linesPerPage - 1) / linesPerPage
+	return pagecount
+
+}

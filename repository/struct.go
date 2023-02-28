@@ -12,6 +12,7 @@ type WordCount struct {
 	Sentence         int                `json:"sentence" bson:"sentence"`
 	Paragraphs       int                `json:"paragraphs" bson:"paragraphs"`
 	Lines            int                `json:"lines" bson:"lines"`
+	Pages            int                `json:"page" bson:"page"`
 }
 
 type WordCounts []WordCount
